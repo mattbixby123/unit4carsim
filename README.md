@@ -63,4 +63,4 @@ When you are finished, submit a GitHub link containing:
 - all relevant code for the project
 - an updated repository with new commits
 
-![alt text](dbschema.png)
+![alt text](db_schema.png)
