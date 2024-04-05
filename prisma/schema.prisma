@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Define the User model
+model users {
+  id       Int        @id @default(autoincrement())
+  name     String
+  email    String     @unique
+  password String
+  reviews  reviews[]
+  comments comments[]
+}
+
+// Define the Item model
+model items {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  reviews     reviews[]
+  comments    comments[]
+}
+
+// Define the Review model
+model reviews {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  itemId    Int
+  rating    Int
+  text      String?
+  createdAt DateTime @default(now())
+
+  // Define foreign key constraints
+  users users @relation(fields: [userId], references: [id])
+  items items @relation(fields: [itemId], references: [id])
+
+  // Define check constraint
+  // @@check(rating >= 1 && rating <= 5)
+  comments comments[]
+
+  // Define unique constraint
+  @@unique([userId, itemId], name: "unique_user_review")
+}
+
+// Define the Comment model
+model comments {
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  itemId   Int
+  reviewId Int
+  text     String?
+
+  // Define foreign key constraints
+  users   users   @relation(fields: [userId], references: [id])
+  items   items   @relation(fields: [itemId], references: [id])
+  reviews reviews @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+}
