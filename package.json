@@ -7,14 +7,19 @@
     "start:dev": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "prisma": {
+    "seed": "node server/db/seed.js"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Matthew Bixby",
   "license": "ISC",
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@prisma/client": "^5.12.1",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "faker": "^5.5.3",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "pg": "^8.11.5"
