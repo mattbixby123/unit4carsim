@@ -1,7 +1,7 @@
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
-const app = express();
+const app = require("./index");
 const jwt = require("jsonwebtoken");
 
 // Logging middleware
