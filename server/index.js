@@ -1,6 +1,7 @@
 // this is the index for the express server
-require('dotenv').config();
-const app = require('./app');
+require("dotenv").config();
+const express = require("express"); // need this 1 of 2
+const app = express(); // 2 of 2 for express to work. no need to import the express call from app.js
 
 
 
