@@ -1,6 +1,6 @@
 const { Pool } = require("pg");
 const { PrismaClient } = require('@prisma/client');
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 const db = new Pool({
   connectionString:
@@ -8,17 +8,16 @@ const db = new Pool({
     "postgresql://matthewbixby@localhost:5432/unit4carsim",
 });
 
-const prisma = new PrismaClient();
-// .$extends({
-//   query: {
-//     instructor: {
-//       async create({ model, operation, args, query}) {
-//         args.data =  {...args.data, password: bcrypt.hashSync(args.data.password, Number(process.env.SALT_ROUNDS))};
-//         return query(args);
-//       }
-//     }
-//   }
-// });
+const prisma = new PrismaClient().$extends({
+  query: {
+    users: {
+      async create({ model, operation, args, query}) {
+        args.data =  {...args.data, password: bcrypt.hashSync(args.data.password, Number(process.env.SALT_ROUNDS))};
+        return query(args);
+      }
+    }
+  }
+});
 
 
 async function query(sql, params, callback) {
