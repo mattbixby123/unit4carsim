@@ -18,7 +18,6 @@ router.post("/register", async (req, res, next) => {
     });
     // Create a token with the instructor id
     const token = jwt.sign({ id: user.id }, process.env.JWT);
-    console.log('token - ', token)
     res.status(201).send({ token })
 
   } catch (error) {
