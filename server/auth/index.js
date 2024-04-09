@@ -4,8 +4,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const axios = require("axios");
 
+
 // Register a new user account
 router.post("/register", async (req, res, next) => {
+  console.log("hello console!")
   try {
     const user = await prisma.users.create({
       data: {
@@ -27,7 +29,7 @@ router.post("/register", async (req, res, next) => {
 // Login to an exisiting user account
 router.post("/login", async (req, res, next) => {
   try {
-    const user = await prisma.instructor.findUnique({
+    const user = await prisma.users.findUnique({
       where: {
         email: req.body.email,
       },
