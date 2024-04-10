@@ -2,7 +2,6 @@ const router = require("express").Router();
 const { prisma } = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
-const axios = require("axios");
 
 
 // Register a new user account
