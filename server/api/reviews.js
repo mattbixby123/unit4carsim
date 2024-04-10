@@ -42,10 +42,11 @@ router.get("/me", async (req, res, next) => {
 // TEST - POST '/reviews' - to submit a review
 router.post("/", async (req, res, next) => {
   try {
-    const { userId, itemId, rating, text } = req.body;
+    const { id } = req.user;
+    const { itemId, rating, text } = req.body;
     const review = await prisma.reviews.create({
       data: {
-        userId: parseInt(userId),
+        userId: id,
         itemId: parseInt(itemId),
         rating: parseInt(rating),
         text: text || null,
