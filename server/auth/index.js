@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt');
 
 // Register a new user account
 router.post("/register", async (req, res, next) => {
-  console.log("hello console!")
   try {
     const user = await prisma.users.create({
       data: {

@@ -70,7 +70,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-// TEST - DELETE /comments/:id
+// DELETE /comments/:id
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
