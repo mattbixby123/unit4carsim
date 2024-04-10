@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { prisma } = require("../db");
 
+
 // TEST - GET route '/reviews' -  to fetch all reviews
 router.get("/", async (req, res, next) => {
   try {
@@ -14,12 +15,17 @@ router.get("/", async (req, res, next) => {
 // TEST - GET '/reviews/me' - to fetch fetch all reviews written by a registered user
 router.get("/me", async (req, res, next) => {
   try {
+    let reviews;
+
     const { userId } = req.query;
-    const reviews = await prisma.reviews.findMany({
-      where: {
-        userId: parseInt(userId),
-      },
-    });
+    if (req.user) {
+      reviews = await prisma.reviews.findMany({
+        where: {
+          userId: parseInt(userId),
+        },
+      });
+    }
+  
     res.json(reviews);
   } catch (error) {
     next(error);

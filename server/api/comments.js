@@ -1,15 +1,21 @@
 const router = require("express").Router();
 const { prisma } = require("../db");
 
-// TEST - GET /comments/me
+// WORKING, pre comment adding - GET /comments/me
 router.get("/me", async (req, res, next) => {
   try {
+    let comments;
+
     const { userId } = req.query;
-    const comments = await prisma.comments.findMany({
-      where: {
-        userId: parseInt(userId),
-      },
-    });
+    // check if user is authenticated
+    if (req.user) {
+      comments = await prisma.comments.findMany({
+        where: {
+          userId: parseInt(userId),
+        },
+      });
+    }
+  
     res.json(comments);
   } catch (error) {
     next(error);
@@ -19,11 +25,13 @@ router.get("/me", async (req, res, next) => {
 // TEST - POST /comments
 router.post("/", async (req, res, next) => {
   try {
-    const { userId, itemId, text } = req.body;
+    const { userId } = req.params;
+    const { itemId, reviewId, text } = req.body;
     const comment = await prisma.comments.create({
       data: {
-        userId: parseInt(userId),
+        userId: userId,
         itemId: parseInt(itemId),
+        reviewId: parseInt(reviewId),
         text: text || null,
       },
     });
@@ -61,8 +69,7 @@ router.delete("/:id", async (req, res, next) => {
         id: parseInt(id),
       },
     });
-    res.json({ message: "Comment deleted successfully" });
-    res.status(204).send();
+    res.status(204).send("Comment deleted successfully");
   } catch (error) {
     next(error);
   }

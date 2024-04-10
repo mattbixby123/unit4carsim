@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const { prisma } = require("../db");
 
-// TEST - GET '/items' to fetch all items
+// GET '/items' to fetch all items
 router.get("/", async (req, res, next) => {
   try {
+    // const { searchString, skip, take, orderBy } = req.query;
     const items = await prisma.items.findMany();
     res.json(items);
   } catch (error) {
@@ -11,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// TEST - GET '/items/:id' - to fetch details of a specific item
+// GET '/items/:id' - to fetch details of a specific item
 router.get("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
