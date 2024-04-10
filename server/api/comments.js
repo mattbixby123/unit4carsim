@@ -31,7 +31,7 @@ router.get("/me", async (req, res, next) => {
   }
 });
 
-// TEST - POST /comments
+// POST /comments
 router.post("/", async (req, res, next) => {
   try {
     const { id } = req.user; 
@@ -51,7 +51,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// TEST - PUT /comments/:id
+// PUT /comments/:id
 router.put("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -79,7 +79,7 @@ router.delete("/:id", async (req, res, next) => {
         id: parseInt(id),
       },
     });
-    res.status(204).send("Comment deleted successfully");
+    res.status(204).send();
   } catch (error) {
     next(error);
   }
