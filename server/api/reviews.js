@@ -1,6 +1,13 @@
 const router = require("express").Router();
 const { prisma } = require("../db");
 
+// Deny access if user is not logged in -- this is needed on all routes where auth/login is required
+router.use((req, res, next) => {
+  if (!req.user) {
+    return res.status(401).send("You must be logged in to do that.");
+  }
+  next();
+});
 
 // TEST - GET route '/reviews' -  to fetch all reviews
 router.get("/", async (req, res, next) => {

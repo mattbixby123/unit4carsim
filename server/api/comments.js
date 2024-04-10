@@ -1,6 +1,15 @@
 const router = require("express").Router();
 const { prisma } = require("../db");
 
+
+// Deny access if user is not logged in
+router.use((req, res, next) => {
+  if (!req.user) {
+    return res.status(401).send("You must be logged in to do that.");
+  }
+  next();
+});
+
 // WORKING, pre comment adding - GET /comments/me
 router.get("/me", async (req, res, next) => {
   try {
@@ -25,11 +34,12 @@ router.get("/me", async (req, res, next) => {
 // TEST - POST /comments
 router.post("/", async (req, res, next) => {
   try {
-    const { userId } = req.params;
+    const { id } = req.user; 
+    console.log(req.user); // used to check if we needed id or userId ... we needed to call id from req.user instead of userId
     const { itemId, reviewId, text } = req.body;
     const comment = await prisma.comments.create({
       data: {
-        userId: userId,
+        userId: id,
         itemId: parseInt(itemId),
         reviewId: parseInt(reviewId),
         text: text || null,
